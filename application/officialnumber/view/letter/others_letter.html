@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <title>{$users['w_nickname']}留给你的信</title>
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/common.css" />
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/self.css" />
+    <script src="http://cdnaliyun.oss-cn-hangzhou.aliyuncs.com/js/jquery1.10.2.min.js"></script>
+    <script src="http://www.mukzz.pw/tpwx/h5/letter/js/common.js"></script>
+    <script>
+
+        var web_url = "http://www.mukzz.pw/tpwx/public/?s=";
+        var web_h5 = "http://www.mukzz.pw/tpwx/h5";
+
+        isWeiXin("show-page", "off", web_h5+"/letter/null.html");
+
+    </script>
+
+</head>
+<body>
+
+<!--开始-内容-->
+<div class="box">
+
+
+    {volist name="users" id="vo" offset="0" length='1'}
+    <!--头像-->
+    <div class="header-div center">
+        <img src="{$users['writor_head']}" class="user-header" alt="用户头像"/>
+    </div>
+    <!--信内容-->
+    <div class="letter">
+        <div class="letter-title">致<span>{$users['nickname']}</span></div>
+        <!--<div class="letter-content">-->
+            <!--{$users['writor_letter']}-->
+        <!--</div>-->
+        <!--<div class="letter-editor">——你的&nbsp;<span>{$users['writor_name']}</span></div>-->
+
+        <div class="letter-content">-</div>
+        <div class="letter-editor">——你的&nbsp;<span class="letter-editor-name">-</span></div>
+
+    </div>
+    <!--按钮-->
+    <div class="center">
+        <div class="div-btn act pointer">我也来写一封指定人才能看到的信</div>
+    </div>
+    {/volist}
+
+
+</div>
+<!--结束-内容-->
+<div class="footer-txt">一定要记得关注支持我们哦</div>
+
+<script>
+
+    var num = Math.ceil(Math.random() * 11);
+
+    // 处理num
+    if(!getCookie(cookie_pre+"num")){
+        var url = web_url + "/officialnumber/letter/others_letter_max_num"; // json的网络地址
+        $.getJSON(url, function(dataObj, status){
+
+            console.log(status);
+            if(status !== "success"){
+                alert("数据请求失败");
+                return;
+            }
+
+            num = dataObj;
+
+            // 生成随机数
+            var randomNum = Math.ceil(Math.random() * num); // 主要获取1到num的随机整数，取0的几率极小。
+            if (randomNum === 0){
+                randomNum = 1;
+            }
+            num = randomNum-1;
+
+            console.log("生成随机数="+num);
+
+        });
+
+        setCookie(cookie_pre+"num", num, 4);
+    }else{
+
+        num = getCookie(cookie_pre+"num");
+        console.log("随机数="+num);
+
+    }
+
+    // 拿值
+    var tran_url = web_url + "/officialnumber/letter/others_letter&only_num="+num; // json的网络地址
+    $.getJSON(tran_url, function(dataObj, status){
+
+        console.log(dataObj.content);
+
+        $(".letter-content").html(dataObj.content);
+        $(".letter-editor-name").html("匿名人X");
+
+    });
+
+</script>
+
+<script>
+
+    setCookie(cookie_pre+"openid", "{$users['openid']}", 30);
+    setCookie(cookie_pre+"id", "{$users['id']}", 30);
+    setCookie(cookie_pre+"nickname", "{$users['nickname']}", 30);
+    setCookie(cookie_pre+"headimgurl", "{$users['headimgurl']}", 30);
+
+    $(function () {
+        $(".div-btn").click(function () {
+            console.log("跳转到写信页面");
+            window.location.replace(web_url+"/officialnumber/letter/write_letter");
+            //window.location.href = web_url+"/officialnumber/letter/write_letter";
+        });
+    });
+
+</script>
+
+
+
+</body>
+</html>

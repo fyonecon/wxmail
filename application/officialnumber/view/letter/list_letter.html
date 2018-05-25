@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <title>收到以下用户给你写的信</title>
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/common.css" />
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/self.css" />
+    <script src="http://cdnaliyun.oss-cn-hangzhou.aliyuncs.com/js/jquery1.10.2.min.js"></script>
+    <script src="http://www.mukzz.pw/tpwx/h5/letter/js/common.js"></script>
+    <title>N个人给你写了信哦</title>
+    <script>
+        var web_url = "http://www.mukzz.pw/tpwx/public/?s=";
+        var web_h5 = "http://www.mukzz.pw/tpwx/h5";
+        isWeiXin("show-page", "off", web_h5+"/letter/null.html");
+    </script>
+    <style>
+
+        .letter-div{
+            padding-left: 15px;
+            padding-right: 15px;
+
+        }
+        .letter-a{
+            display: block;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            overflow: hidden;
+            border-bottom: 1px solid #E0EEEE;
+            padding: 0 5px;
+
+        }
+        .letter-div:active{
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--开始-内容-->
+<div class="box">
+    <div class="letter-list" id="letter-list"  oncontextmenu="return false" onselectstart="return false">
+        <!--<div class="letter-div"><a class="letter-a" href="" title="不同用户的最新一封匹配信"><span style="color: #9B30FF;">用户[1]&nbsp;</span>给你写了一封信，立即查看</a></div>-->
+    </div>
+</div>
+<!--结束-内容-->
+<div class="footer-txt">一定要记得关注支持我们哦</div>
+{volist name="users" id="vo" offset="0" length='1'}{/volist}
+<script>
+
+    var id = "{$users['id']}";
+    var openid = "{$users['openid']}";
+    var nickname = "{$users['nickname']}";
+    var headimgurl = "{$users['headimgurl']}";
+
+    //接口 http://www.mukzz.pw/tpwx/public/?s=/officialnumber/letter/show_letter_len&nickname=&openid=&headimgurl=
+    var len = 0;
+    var tran_url = web_url+"/officialnumber/letter/show_letter_len&nickname="+nickname+"&openid="+openid+"&headimgurl="+headimgurl; // json的网络地址
+    $.getJSON(tran_url, function(dataObj, status){
+
+        console.log(status);
+
+        if (status === "success"){
+
+            len = dataObj;
+            console.log(len);
+
+            if (len === 0){ // 没有匹配信
+                var href = web_url+"/officialnumber/letter/show_letter&len="+(len-1)+"&nickname="+nickname+"&openid="+openid+"&headimgurl="+headimgurl; // &len = -1 时表明没有匹配信
+                window.location.replace(href);
+            }else if(len === 1){ // 只有一封匹配信就直接查看信内容
+                var href = web_url+"/officialnumber/letter/show_letter&len="+(len-1)+"&nickname="+nickname+"&openid="+openid+"&headimgurl="+headimgurl;
+                window.location.replace(href);
+            }else{ // 在线用户有多个不同人对应的的对封信
+                for(var i=0;i<len;i++){
+                    var href = web_url+"/officialnumber/letter/show_letter&len="+i+"&nickname="+nickname+"&openid="+openid+"&headimgurl="+headimgurl;
+
+                    $(".letter-list").append('<div class="letter-div"><a class="letter-a" href="'+ href
+                        +'" title="不同用户的最新一封匹配信"><span style="color: #9B30FF;">用户['+ (i+1)
+                        +']</span>&nbsp;给你写了一封信，立即查看</a></div>'
+                    );
+                }
+            }
+        }else {
+            alert("接口请求出现错误");
+            window.close();
+        }
+
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

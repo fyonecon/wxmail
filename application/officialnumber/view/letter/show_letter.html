@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <title>{$users['w_nickname']}给你写的信</title>
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/common.css" />
+    <link rel="stylesheet" href="http://www.mukzz.pw/tpwx/h5/letter/css/self.css" />
+    <script src="http://cdnaliyun.oss-cn-hangzhou.aliyuncs.com/js/jquery1.10.2.min.js"></script>
+    <script src="http://www.mukzz.pw/tpwx/h5/letter/js/common.js"></script>
+    <script>
+
+        var web_url = "http://www.mukzz.pw/tpwx/public/?s=";
+        var web_h5 = "http://www.mukzz.pw/tpwx/h5";
+
+        isWeiXin("show-page", "off", web_h5+"/letter/null.html");
+
+    </script>
+
+</head>
+<body>
+
+<!--开始-内容-->
+<div class="box">
+
+    <!--length='1'-->
+
+    {volist name="users" id="vo" offset="0" length='1'}
+    <!--头像-->
+    <div class="header-div center">
+        <img src="{$users['writor_head']}" class="user-header" alt="用户头像"/>
+    </div>
+    <!--信内容-->
+    <div class="letter">
+        <div class="letter-title">致<span>{$users['nickname']}</span></div>
+        <div class="letter-content">
+            {$users['writor_letter']}
+        </div>
+        <div class="letter-editor">——你的&nbsp;<span>{$users['writor_name']}</span></div>
+    </div>
+    <!--按钮-->
+    <div class="center">
+        <div class="div-btn act pointer">我也来写一封指定人才能看到的信</div>
+    </div>
+    {/volist}
+
+</div>
+<!--结束-内容-->
+<div class="footer-txt">一定要记得关注支持我们哦</div>
+
+<script>
+
+    setCookie(cookie_pre+"openid", "{$users['openid']}", 30);
+    setCookie(cookie_pre+"id", "{$users['id']}", 30);
+    setCookie(cookie_pre+"nickname", "{$users['nickname']}", 30);
+    setCookie(cookie_pre+"headimgurl", "{$users['headimgurl']}", 30);
+
+    // var openid = getCookie(cookie_pre+"openid");
+    // var id = getCookie(cookie_pre+"id");
+    // var nickname = getCookie(cookie_pre+"nickname");
+    //
+    // console.log(openid+"="+id+"="+nickname);
+
+</script>
+
+<script>
+
+    $(function () {
+        $(".div-btn").click(function () {
+            console.log("跳转到写信页面");
+            window.location.replace(web_url+"/officialnumber/letter/write_letter");
+            //window.location.href = web_url+"/officialnumber/letter/write_letter";
+        });
+    });
+
+</script>
+
+
+
+
+</body>
+</html>

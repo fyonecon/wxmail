@@ -1,0 +1,132 @@
+
+/*公用css*/
+
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #1B9AAA;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+a:hover {
+  color: #14727e;
+}
+a:focus, a:active {
+  color: #0d4a52;
+}
+
+.active:active{
+	opacity: 0.8;
+}
+.pointer{
+	cursor: pointer;
+}
+.word-wrap{
+	word-wrap:break-word;
+}
+
+body{
+	background: #eee;
+	padding: 0;
+	margin: 0;
+}
+
+.container{
+	width: 100%;
+	background: white;
+	/*min-height: 300px;*/
+}
+.res-content{
+	width: 100%;
+	background: white;
+	/*min-height: 300px;*/
+}
+@media only screen and (min-width: 301px) and (max-width: 700px) {
+	.container{
+		width: 100%;
+	}
+	.res-content{
+		width: 100%;
+	}
+}
+@media only screen and (max-width: 300px) {
+	.container{
+		width: 300px;
+	}
+	.res-content{
+		width: 300px;
+	}
+}
+@media only screen and (min-width: 701px)  {
+	.container{
+		width: 700px;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+	.res-content{
+		width: 700px;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+}
+
+p {
+  line-height: 1.4;
+}
+.p{
+	line-height: 1.4;
+  font-size: 12px;
+}
+
+.directions{
+	margin-top: 20px;
+}
+
+.inspired {
+  margin-top: 1em;
+  font-size: 0.9rem;
+  color: #9a9a95;
+}
+
+header {
+  color: #F8FFE5;
+  text-align: center;
+}
+header span {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 4rem;
+  height: 4rem;
+  line-height: 4rem;
+  margin: 0 0.4rem;
+  background: #FFC43D;
+}
+header span:nth-of-type(2) {
+  background: #EF476F;
+}
+header span:nth-of-type(3) {
+  background: #1B9AAA;
+}
+header span:nth-of-type(4) {
+  background: #06D6A0;
+}
+
+.in-block{
+	display: inline-block;
+}
+
+.info-div{
+	padding: 10px 0px 30px 0px;
+}
+
+.clear{
+	clear: both;
+}
+.hide{
+	display: none
+}
